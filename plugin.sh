@@ -104,7 +104,7 @@ if [ -n "${PLUGIN_MIRROR:-}" ]; then
     ${EXTRA_OPTS}=$(echo "${EXTRA_OPTS} --registry-mirror=${PLUGIN_MIRROR}")
 fi
 
-/kaniko/executor -v ${LOG} \
+/kaniko/executor --force -v ${LOG} \
     --context=${CONTEXT} \
     --dockerfile=${DOCKERFILE} \
     ${EXTRA_OPTS} \
