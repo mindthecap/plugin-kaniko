@@ -96,6 +96,14 @@ else
     CACHE=""
 fi
 
+if [ -n "${PLUGIN_DRY_RUN:-}" ]; then
+    ${EXTRA_OPTS}=$(echo "${EXTRA_OPTS} --no-push")
+fi
+
+if [ -n "${PLUGIN_MIRROR:-}" ]; then
+    ${EXTRA_OPTS}=$(echo "${EXTRA_OPTS} --registry-mirror=${PLUGIN_MIRROR}")
+fi
+
 /kaniko/executor -v ${LOG} \
     --context=${CONTEXT} \
     --dockerfile=${DOCKERFILE} \
