@@ -97,15 +97,15 @@ else
 fi
 
 if [ -n "${PLUGIN_DRY_RUN:-}" ]; then
-    ${EXTRA_OPTS}=$(echo "${EXTRA_OPTS} --no-push")
+    EXTRA_OPTS="${EXTRA_OPTS} --no-push"
 fi
 
 if [ -n "${PLUGIN_MIRROR:-}" ]; then
-    ${EXTRA_OPTS}=$(echo "${EXTRA_OPTS} --registry-mirror=${PLUGIN_MIRROR}")
+    EXTRA_OPTS="${EXTRA_OPTS} --registry-mirror=${PLUGIN_MIRROR}"
 fi
 
 if [ -n "${PLUGIN_TARPATH:-}" ]; then
-    ${EXTRA_OPTS}=$(echo "${EXTRA_OPTS} --tarPath=${PLUGIN_TARPATH}")
+    EXTRA_OPTS="${EXTRA_OPTS} --tarPath=${PLUGIN_TARPATH} --destination=image"
 fi
 
 /kaniko/executor -v ${LOG} \
