@@ -60,7 +60,7 @@ fi
 
 # auto_tag, if set auto_tag: true, auto generate .tags file
 # support format Major.Minor.Release or start with `v`
-# docker tags: Major.Minor.Release or latest
+# docker tags: vMajor.Minor.Release or latest
 # missing semver is replaced with "0"
 if [[ "${PLUGIN_AUTO_TAG:-}" == "true" ]]; then
     TAG=$(echo "${DRONE_TAG:-}" |sed 's/^v//g')
@@ -81,7 +81,7 @@ if [[ "${PLUGIN_AUTO_TAG:-}" == "true" ]]; then
         minor=${minor:-0}
         release=${release:-0}
     
-        echo "${major}.${minor}.${release}" > .tags
+        echo "v${major}.${minor}.${release}" > .tags
     fi  
 fi
 
