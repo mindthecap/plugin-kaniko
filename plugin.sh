@@ -68,8 +68,10 @@ if [[ "${PLUGIN_AUTO_TAG:-}" == "true" ]]; then
     # expect number
     echo ${TAG} |grep -E "[a-z-]" &>/dev/null && isNum=1 || isNum=0
 
-    if [ ! -n "${TAG:-}" ];then
+    if [ ! -n "${TAG:-}" ] && [ "$DRONE_REPO_BRANCH" = "$DRONE_COMMIT_BRANCH" ];then
         echo "latest" > .tags
+    elif [ ! -n "${TAG:-}" ];then
+        echo "${CI_COMMIT_SHA:0:8}" > .tags
     elif [ ${isNum} -eq 1 -o ${part} -gt 3 ];then
         echo "${TAG}" > .tags
     else
