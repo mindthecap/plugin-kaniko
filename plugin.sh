@@ -54,9 +54,18 @@ if [ -n "${PLUGIN_BUILD_ARGS:-}" ]; then
     BUILD_ARGS=$(echo "${PLUGIN_BUILD_ARGS}" | tr ',' '\n' | while read build_arg; do echo "--build-arg=${build_arg}"; done)
 fi
 
+if [ "${PLUGIN_BUILD_ARGS_PROXY_FROM_ENV:-}" != "false" ]; then
+    if [ -n "${PLUGIN_BUILD_ARGS_FROM_ENV:-}" ]; then
+        PLUGIN_BUILD_ARGS_FROM_ENV="HTTP_PROXY,HTTPS_PROXY,NO_PROXY,http_proxy,https_proxy,no_proxy,${PLUGIN_BUILD_ARGS_FROM_ENV}"
+    else
+        PLUGIN_BUILD_ARGS_FROM_ENV="HTTP_PROXY,HTTPS_PROXY,NO_PROXY,http_proxy,https_proxy,no_proxy"
+    fi
+fi
+
 if [ -n "${PLUGIN_BUILD_ARGS_FROM_ENV:-}" ]; then
     BUILD_ARGS_FROM_ENV=$(echo "${PLUGIN_BUILD_ARGS_FROM_ENV}" | tr ',' '\n' | while read build_arg; do echo "--build-arg ${build_arg}=$(eval "echo \$$build_arg")"; done)
 fi
+
 
 # auto_tag, if set auto_tag: true, auto generate .tags file
 # support format Major.Minor.Release or start with `v`
