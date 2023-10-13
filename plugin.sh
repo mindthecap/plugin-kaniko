@@ -31,7 +31,7 @@ LOG=${PLUGIN_LOG:-info}
 EXTRA_OPTS=""
 
 if [[ -n "${PLUGIN_TARGET:-}" ]]; then
-    TARGET="--target=${PLUGIN_TARGET}"
+    TARGET="--target=${PLUGIN_TARGET} --skip-unused-stages"
 fi
 
 if [[ "${PLUGIN_SKIP_TLS_VERIFY:-}" == "true" ]]; then
