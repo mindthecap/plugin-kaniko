@@ -31,8 +31,11 @@ LOG=${PLUGIN_LOG:-info}
 EXTRA_OPTS=""
 
 if [[ -n "${PLUGIN_TARGET:-}" ]]; then
-    TARGET="--target=${PLUGIN_TARGET} --skip-unused-stages"
+    TARGET="--target=${PLUGIN_TARGET}"
 fi
+
+SKIP_UNUSED_STAGES=" --skip-unused-stages=${PLUGIN_SKIP_UNUSED_STAGES:-"true"}"
+
 
 if [[ "${PLUGIN_SKIP_TLS_VERIFY:-}" == "true" ]]; then
     EXTRA_OPTS="--skip-tls-verify=true"
@@ -124,6 +127,7 @@ fi
     --context=${CONTEXT} \
     --dockerfile=${DOCKERFILE} \
     --force \
+    ${SKIP_UNUSED_STAGES} \
     ${EXTRA_OPTS} \
     ${DESTINATIONS} \
     ${CACHE:-} \
